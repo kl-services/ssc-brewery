@@ -18,9 +18,6 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @Configuration
 @EnableWebSecurity
-//@EnableGlobalMethodSecurity(securedEnabled = true, prePostEnabled = true)
-//first parameter needed for @Secured annotations on methods (longform role specification i.e. 'ROLE_ADMIN'),
-//second parameter added for @PreAuthorize annotations on methods (method expressions BEST OPTION, may refer to roles directly i.e. 'ADMIN')
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
