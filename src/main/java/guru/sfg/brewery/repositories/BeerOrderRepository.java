@@ -23,6 +23,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Lock;
+import org.springframework.data.jpa.repository.Query;
 
 import javax.persistence.LockModeType;
 import java.util.List;
@@ -39,4 +40,10 @@ public interface BeerOrderRepository  extends JpaRepository<BeerOrder, UUID> {
 
     @Lock(LockModeType.PESSIMISTIC_WRITE)
     BeerOrder findOneById(UUID id);
+
+    //Implementation of BeerOrderControllerV2 with Authentication Principal Design
+    //'?1' means first binding parameter passed to repository query (orderId), ':' tells hibernate we are inserting a method
+    @Query("select o from BeerOrder o where o.id =?1 and " +
+            "(true = :#{hasAuthority('order.read')} or o.customer.id = ?#{principal?.customer?.id})")
+    BeerOrder findOrderByIdSecure(UUID orderId);
 }

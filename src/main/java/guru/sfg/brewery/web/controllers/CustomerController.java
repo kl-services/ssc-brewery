@@ -19,11 +19,10 @@ package guru.sfg.brewery.web.controllers;
 
 import guru.sfg.brewery.domain.Customer;
 import guru.sfg.brewery.repositories.CustomerRepository;
-import guru.sfg.brewery.security.perms.CustomerCreatePermission;
-import guru.sfg.brewery.security.perms.CustomerReadPermission;
-import guru.sfg.brewery.security.perms.CustomerUpdatePermission;
+import guru.sfg.brewery.security.permissions.customer.CustomerCreatePermission;
+import guru.sfg.brewery.security.permissions.customer.CustomerReadPermission;
+import guru.sfg.brewery.security.permissions.customer.CustomerUpdatePermission;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

@@ -17,10 +17,10 @@
 
 package guru.sfg.brewery.web.controllers.api;
 
-import guru.sfg.brewery.security.perms.BeerCreatePermission;
-import guru.sfg.brewery.security.perms.BeerDeletePermission;
-import guru.sfg.brewery.security.perms.BeerReadPermission;
-import guru.sfg.brewery.security.perms.BeerUpdatePermission;
+import guru.sfg.brewery.security.permissions.beer.BeerCreatePermission;
+import guru.sfg.brewery.security.permissions.beer.BeerDeletePermission;
+import guru.sfg.brewery.security.permissions.beer.BeerReadPermission;
+import guru.sfg.brewery.security.permissions.beer.BeerUpdatePermission;
 import guru.sfg.brewery.services.BeerService;
 import guru.sfg.brewery.web.model.BeerDto;
 import guru.sfg.brewery.web.model.BeerPagedList;
@@ -31,7 +31,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.ConstraintViolationException;

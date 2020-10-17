@@ -66,6 +66,20 @@ public class BeerOrderServiceImpl implements BeerOrderService {
         }
     }
 
+    //Implementation of BeerOrderControllerV2 with Authentication Principal Design
+    @Override
+    public BeerOrderPagedList listOrders(Pageable pageable) {
+        Page<BeerOrder> beerOrderPage = beerOrderRepository.findAll(pageable);
+
+        return new BeerOrderPagedList(beerOrderPage
+                .stream()
+                .map(beerOrderMapper::beerOrderToDto)
+                .collect(Collectors.toList()), PageRequest.of(
+                beerOrderPage.getPageable().getPageNumber(),
+                beerOrderPage.getPageable().getPageSize()),
+                beerOrderPage.getTotalElements());
+    }
+
     @Transactional
     @Override
     public BeerOrderDto placeOrder(UUID customerId, BeerOrderDto beerOrderDto) {
@@ -89,9 +103,18 @@ public class BeerOrderServiceImpl implements BeerOrderService {
         throw new RuntimeException("Customer Not Found");
     }
 
+    //v1 implementation
     @Override
     public BeerOrderDto getOrderById(UUID customerId, UUID orderId) {
         return beerOrderMapper.beerOrderToDto(getOrder(customerId, orderId));
+    }
+
+    //Implementation of BeerOrderControllerV2 with Authentication Principal Design
+    @Override
+    public BeerOrderDto getOrderById(UUID orderId) {
+        BeerOrder beerOrder = beerOrderRepository.findOrderByIdSecure(orderId);
+
+        return beerOrderMapper.beerOrderToDto(beerOrder);
     }
 
     @Override
