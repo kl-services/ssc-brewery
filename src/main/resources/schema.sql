@@ -1,0 +1,5 @@
+ -- Must remember to do a Maven:Clean & Package before running app to ensure the presence of the table at runtime
+create table persistent_logins (username varchar(64) not null,
+                                series varchar(64) primary key,
+                                token varchar(64) not null,
+                                last_used timestamp not null);
