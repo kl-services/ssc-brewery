@@ -82,6 +82,20 @@ public class User implements UserDetails, CredentialsContainer {
     @Builder.Default
     private Boolean enabled = true;
 
+    //Has the user set up google 2fa?  Determines if it needs to be processed
+    @Builder.Default
+    private Boolean useGoogle2fa = false;
+
+    //Unique to each verification of Google, needed to handle authentication process.  Needs to be repeated on
+    //each application restart if testing with H2 database.  Otherwise in a production setting this would only
+    //need to be done once.
+    private String google2faSecret;
+
+    //Don't persist this property to database as it's only needed for runtime tracking --
+    //Determines if the user has been authenticated, true = no, set to false when google authentication is successful
+    @Transient
+    private Boolean google2faRequired = true;
+
     @CreationTimestamp
     @Column(updatable = false)
     private Timestamp createdDate;

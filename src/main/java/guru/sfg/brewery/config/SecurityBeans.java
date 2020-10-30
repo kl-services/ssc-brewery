@@ -1,5 +1,8 @@
 package guru.sfg.brewery.config;
 
+import com.warrenstrange.googleauth.GoogleAuthenticator;
+import com.warrenstrange.googleauth.GoogleAuthenticatorConfig;
+import com.warrenstrange.googleauth.ICredentialRepository;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -9,9 +12,27 @@ import org.springframework.security.web.authentication.rememberme.JdbcTokenRepos
 import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
 
 import javax.sql.DataSource;
+import java.util.concurrent.TimeUnit;
 
 @Configuration
 public class SecurityBeans {
+
+    @Bean
+    public GoogleAuthenticator googleAuthenticator(ICredentialRepository credentialRepository){
+        GoogleAuthenticatorConfig.GoogleAuthenticatorConfigBuilder configBuilder
+                = new GoogleAuthenticatorConfig.GoogleAuthenticatorConfigBuilder();
+
+        configBuilder
+                //***CRITICAL*** TimeStep adjusted from JT's source to accommodate server proximity, authentication fails if not set accordingly
+                .setTimeStepSizeInMillis(TimeUnit.SECONDS.toMillis(30))
+                .setWindowSize(10)
+                .setNumberOfScratchCodes(0);
+
+        GoogleAuthenticator googleAuthenticator = new GoogleAuthenticator(configBuilder.build());
+        googleAuthenticator.setCredentialRepository(credentialRepository);
+        return googleAuthenticator;
+
+    }
 
     @Bean
     public AuthenticationEventPublisher authenticationEventPublisher(ApplicationEventPublisher applicationEventPublisher){
