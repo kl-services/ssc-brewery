@@ -28,7 +28,7 @@ public abstract class BaseIT {
     public void setup() {
         mockMvc = MockMvcBuilders
                 .webAppContextSetup(wac)
-                //.apply(springSecurity())//disable for mvc
+                .apply(springSecurity())
                 .build();
     }
 
