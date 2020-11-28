@@ -23,7 +23,8 @@ public class SecurityBeans {
                 = new GoogleAuthenticatorConfig.GoogleAuthenticatorConfigBuilder();
 
         configBuilder
-                //***CRITICAL*** TimeStep adjusted from JT's source to accommodate server proximity, authentication fails if not set accordingly
+                //***CRITICAL***
+                //TimeStep adjusted from JT's source to accommodate server proximity, authentication fails if not set accordingly
                 .setTimeStepSizeInMillis(TimeUnit.SECONDS.toMillis(30))
                 .setWindowSize(10)
                 .setNumberOfScratchCodes(0);
